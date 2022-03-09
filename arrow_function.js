@@ -1,5 +1,13 @@
 // Javascript Lanjutan (Advanced Javascript)
-// Arrow Function
+// Arrow Function (this)
+
+/**
+ * 
+ * saat kita menggunakan function (expression/declaration) didalamnya memiliki conteks this.
+ * jika kita mengubah function expression menjadi arrow function, maka konteks this-nya menjadi
+ * berbeda.
+ * 
+ */
 
 /**
  * 
@@ -33,7 +41,7 @@
 
 // Contoh 1
 // Penggunaan arrow function pada function map : 
-let cadets = ['Armin Arlert', 'Eren Jaeger', 'Mikasa Ackerman'];
+// let cadets = ['Armin Arlert', 'Eren Jaeger', 'Mikasa Ackerman'];
 
 // menggunakan function biasa :
 // let lettersCount = cadets.map(function(name) {
@@ -41,12 +49,107 @@ let cadets = ['Armin Arlert', 'Eren Jaeger', 'Mikasa Ackerman'];
 // })
 
 // menggunakan arrow function
-let lettersCount = cadets.map(name => name.length)
-console.log(lettersCount)
+// let lettersCount = cadets.map(name => name.length)
+// console.log(lettersCount)
 
 // return as object
 // let lettersCountObj = cadets.map(name => ({name : name, letterCount : name.length}))
 // di javascript baru, jika ingin membuat object yang key sama dengan valuenya, cukup ditulis 1x
-let lettersCountObj = cadets.map(name => ({name, letterCount : name.length}))
+// let lettersCountObj = cadets.map(name => ({name, letterCount : name.length}))
 // console.log(lettersCountObj)
-console.table(lettersCountObj) // tampilan dalam bentuk tabel yang lebih rapi.
+// console.table(lettersCountObj) // tampilan dalam bentuk tabel yang lebih rapi.
+
+
+/**
+ * 
+ *  _________________________________________
+ * |                                         |
+ * |     Konsep this pada arrow function     |
+ * |_________________________________________|
+ * 
+ */
+
+// Contructor Function
+// const Students = function() {
+//   this.name = 'Jean';
+//   this.age  = 21;
+//   this.sayHello = function() {
+//     console.log(`Hello, im ${this.name}, and im ${this.age}`);
+//   }
+// }
+// const jean = new Students();
+
+//  Arrow Function
+// const Students = function() {
+//   this.name = 'Jean';
+//   this.age  = 21;
+//   this.sayHello = () => {
+//     console.log(`Hello, im ${this.name}, and im ${this.age}`);
+//   }
+// }
+// const jean = new Students();
+
+
+
+// Object Literal
+// const mhs1 = {
+//   nama : 'Via',
+//   umur : 21,
+//   sayHello : () => {
+//     console.log(`Halo, nama saya ${this.nama}, dan saya ${this.umur} tahun.`); // undefined
+//   }
+// }
+// *arrow function tidak memiliki konsep this.
+
+
+
+const Students = function() {
+  this.name = 'Jean';
+  this.age  = 21;
+  // Function Expression
+  // disimpan dahulu dalam variable, sehingga tidak terkena hoisting.
+  this.sayHello = function() {
+    console.log(`Hello, im ${this.name}, and im ${this.age}`);
+  }
+
+  // Function Declaration
+  // terkena hoisting, sehingga this tidak mengacu ke leksikal scope tapi ke global
+  // setInterval(function() {
+  //   console.log(this.age++) // output : NaN (Not a Number)
+  // }, 500)
+  // untuk mengatasinya kita gunakan arrow function :
+
+  // setInterval(() => {
+  //   console.log(this.age++) 
+  // }, 500)
+  /**
+   * karena arrow function tidak memiliki konsep this
+   * sehingga this akan dicari ke leksikal scope
+   */
+
+}
+// const jean = new Students();
+
+
+
+// Contoh Kasus : 
+const box = document.querySelector('.box')
+box.addEventListener('click', function() {
+  let satu = 'size';
+  let dua  = 'caption';
+
+
+  if(this.classList.contains(satu)) {
+    [satu, dua] = [dua, satu]
+  }
+
+  this.classList.toggle(satu)
+  setTimeout(() => {
+    this.classList.toggle(dua)
+  }, 600)
+})
+/**
+ * 
+ * - this : mengarah ke element itu sendiri, jika menggunakan arrow function, akan mengarah ke window
+ * 
+ */
