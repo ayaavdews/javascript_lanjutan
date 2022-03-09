@@ -1,5 +1,5 @@
 // Javascript Lanjutan (Advanced Javascript)
-// OBJECT (revisited)
+// OBJECT (Object.create())
 
 
 // 1. Object Literal
@@ -23,17 +23,19 @@ let student2 = {
 
 
 
-// 2. Function Declaration
-function Student(id, name, skill) {
-  let student  = {};
-  student.id    = id;
-  student.name  = name;
-  student.skill = skill;
-
-  student.learn = function(subject) {
+// 4. Object.create()
+const methodStudent = {
+  learn : function(subject) {
     this.skill += `, ${subject}`
     console.log(`${this.skill}`)
   }
+}
+
+function Student(id, name, skill) {
+  let student   = Object.create(methodStudent);
+  student.id    = id;
+  student.name  = name;
+  student.skill = skill;
 
   return student;
 }
