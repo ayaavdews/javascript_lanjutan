@@ -1,5 +1,5 @@
 // Javascript Lanjutan (Advanced Javascript)
-// Higher Order Function (teori, definisi, dan contoh)
+// Higher Order Function (penerapan)
 
 /**
  * 
@@ -31,54 +31,102 @@
  * 
  */
 
+const angka = [-1, 8, 9, 1, 4, -5, -4, 3, 2, 9]
+console.log(angka)
 
-// Contoh 1 :
-// function kerjakanTugas(mataKuliah, selesai) {  // --> Higher Order Function, selesai --> callback
-//   console.log(`Mulai mengerjakan tugas ${mataKuliah} ...`);
-//   selesai();
-// }
-// function selesai() {
-//   alert('Selesai mengerjakan tugas')
-// }
-// kerjakanTugas('Pemrograman Web', selesai)
-
-
-// Contoh 2 : 
-// setTimeout(function() {
-//   console.log('Hello World!')
-// }, 1000)
-
-
-// Contoh 3 : 
-// const tombol = document.querySelector('.submit')
-// tombol.addEventListener('click', function() {
-//   console.log('tombol ditekan!')
-// })
-
-
-// Contoh 4 : 
 /**
  * 
- * -->  for (let i=0; i<10; i++) {
- *          console.log(i);
- *      }
- * 
- * 
- * -->  function repeatLog(n) {
- *          for(let i=0; i<n; i++) {
- *              console.log(i);
- *          } 
- *      }
- *      repeatLog(10);
- * 
- * 
- * -->  function repeat(n, action) {
- *          for(let i=0; i<n; i++) {
- *              action(i);
- *          }
- *      }
- *      repeat(10, console.log);
- *      repeat(3, aleret);
+ *  __________________________
+ * |    Filter                |
+ * |    mencari angka >= 3    |
+ * |__________________________|
  * 
  */
 
+// menggunakan for 
+// const newAngka = [];
+// for (let i=0; i<angka.length; i++) {
+//   if (angka[i] >= 3) {
+//     newAngka.push(angka[i])
+//   }
+// }
+
+// const newAngka = angka.filter(function(i){
+//   return i >= 3
+// })
+const newAngka = angka.filter(i => i >= 3)
+console.log(newAngka)
+
+
+
+/**
+ * 
+ *  ________________________________________________________________________________
+ * |    Map                                                                         |
+ * |    memetakan tiap-tiap elemen didalam arraynya menggunakan fungsi yang baru    |
+ * |    * kalikan semua elemen dalam array angka dengan 2(dua)                      |
+ * |________________________________________________________________________________|
+ * 
+ */
+
+const mapAngka = angka.map(a => a * 2)
+console.log(mapAngka)
+
+
+
+/**
+ * 
+ *  ___________________________________________________________
+ * |    Reduce                                                 |
+ * |    melakukan sesuatu terhadap seluruh elemen array-nya    |
+ * |    * jumlahkan semua isi array-nya                        |
+ * |___________________________________________________________|
+ * 
+ *    > memerlukan 2 argumen : 
+ *      1) accumulator
+ *         hasil dari prosesnya (dijumlahkan, dikalikan, dll)
+ *      2) currentValue
+ *         elemen array yang sedang di looping (sekarang sedang looping di elemen yang mana)
+ * 
+ *    > contoh dijumlahkan : 
+ *      0 + (-1) = -1 => (-1) -> currentValue
+ *                        -1  -> accumulator
+ * 
+ *      -1 + 8   = 7  => 8 -> currentValue
+ *                       7 -> accumulator
+ * 
+ *    > secara default ditambahkan 1 argumen diakhir return yang nilainya 0 
+ *      -1 + 8 + 9 + 1 + 4 + -5 + -4 + 3 + 2 + 9
+ *      0 +-1 + 8 + 9 + 1 + 4 + -5 + -4 + 3 + 2 + 9
+ *    
+ *    > nilai default bisa kita ganti
+ *      default 0    = 0 +-1 + 8 + 9 + 1 + 4 + -5 + -4 + 3 + 2 + 9 = 26
+ *      nilai baru 4 = 4 +-1 + 8 + 9 + 1 + 4 + -5 + -4 + 3 + 2 + 9 = 30
+ * 
+ */
+
+const reduceAngka = angka.reduce((accumulator, currentValue) => accumulator + currentValue)
+const reduceAngkaNonDefault = angka.reduce((accumulator, currentValue) => accumulator + currentValue, 4) 
+console.log(reduceAngka) // 26
+console.log(reduceAngkaNonDefault) // 30
+
+
+
+/**
+ * 
+ *  ________________________________________________________________________________
+ * |    Method Chaining                                                             |
+ * |    menggabungkan fungsi-fungsi pada higher order function dalam 1x eksekusi    |
+ * |________________________________________________________________________________|
+ *    
+ *    > cari angka > 5
+ *    > kalikan 3
+ *    > jumlahkan
+ * 
+ */
+
+const angkaChaining = angka
+                        .filter(i => i > 5)   // 8, 9, 9
+                        .map(i => i * 3)      // 24, 27, 27
+                        .reduce((i,j) => i+j) // 78
+console.log(angkaChaining)
