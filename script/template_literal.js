@@ -1,148 +1,92 @@
 // Javascript Lanjutan (Advanced Javascript)
-// Template Literal / Template String (Latihan)
+// Template Literal / Template String (Tagged Templates)
 
 /**
  * 
- * Definisi
- *    > String literal yang memungkinkan adanya expression di dalamnya
- *      ~ MDB Web Docs
- * 
- *      - String Literal :
- *        String yang biasa dibuat. Baik menggunakan petik satu (''), petik dua (""), dan back tick (``)
- *        dengan membuat string literal menggunakan backtick, memungkinkan kita membuat template literal
- * 
- *        Template Literal : 
- *          * hanya bisa dibuat menggunakan `` back tick
- *          * Multi-line String
- *          * Embedded Expression
- *          * HTML Fragments
- *          * Expression Interpolation
- *          * Tagged Template
- * 
- * 
- * Contoh : 
- * - `string  text`                               --> string biasa
- * 
- * - `string text baris 1                         --> multi-line string
- *    string text baris 2
- *    string text baris 3`
- * 
- * - `string text ${expression} string text`      --> embedded expression
- * 
- * - tag `string text ${expression} string text`  --> tagged template
- * 
- * 
- * Tips :
- *    karena emmet tidak bisa digunakan di javascript, kita harus menulis tag html secara manual di back tick (``).
- *    untuk mengatasinya kita bisa ke setting(ctrl + ,) -> search include lang -> edit in settings json ->
- *    diakhir tambahkan "emmet.includeLanguages": {"javascript": "html"} -> save & close.
+ * Definisi : 
+ *    - bentuk yang lebih kompleks dari Template Literals, 
+ *      memungkinkan kita untuk membaca template literals
+ *      melalui sebuah function. ~ MDN Web Docs
  * 
  */
 
-// HTML Fragments
+// Tagged Template
+// const name = 'Erwin Smith';
+// const age  = 33
+// const str  = `Hi, i'm ${age} and my name ${name}`
+// console.log(str)
 
-// 1. Bentuk Umum : 
-// const mhs = {
-//   nama : 'Sandhika Galih',
-//   umur : 33,
-//   nrp  : '043040023',
-//   email: 'sandhikagalih@unpas.ac.id'
+/**
+ * untuk menjadikan string literal diatas (str) menjadi tagged template : 
+ *    - tulis nama function di depan string
+ *      string template literal (`...`) akan masuk seolah-olah sebagai
+ *      paramenter dari fungsi yang dibuat diatas. 
+ *    - secara default tagged template bisa menerima parameter/argumen
+ *    - ketika kita jalankan template literal ini, tagged template akan memecah
+ *      tiap-tiap string yang ada di dalamnya (dipisahkan oleh expression)
+ *    - expression masuk ke parameter berikutnya.
+ * 
+ *    - urutan parameternya berdasarkan posisinya dalam string literal.
+ *    - jika jumlah parameter melebihi jumlah expression, maka akan bernilai undefined
+ *    - ada saat dimana kita tidak tahu ada berapa expression didalam template literal-nya
+ *      javascript punya sebuah argumen bernana rest parameter yang bisa menampung seluruh
+ *      expression dalam tempate literal.
+ *        > cara menulisnya ...nama_variable
+ *        > akan menjadi array yang isinya semua expression yang ada di dalam
+ *          template literal
+ */
+
+// Contoh 1 : 
+// function coba(strings, umur, nama) {
+//   return strings
+//   // return umur     // 33
+//   // return nama     // Erwin Smith
 // }
 
-// const el = `<div class="mhs">
-//   <h2>${mhs.nama}</h2>
-//   <span class="nrp">${mhs.nrp}</span>
-// </div>`
+function coba(strings, ...values) {
+  // return values // [33, "Erwin Smith"]
 
-
-
-// 2. Looping
-// const mhs = [
-//   {
-//     nama : 'oogway',
-//     email: 'oogway@gmail.com'
-//   },
-//   {
-//     nama : 'shifuu',
-//     email: 'shifuu@gmail.com'
-//   },
-//   {
-//     nama : 'tailung',
-//     email: 'tailung@gmail.com'
-//   }
-// ]
-
-// const el = `
-//   <div class="mhs">
-//     ${mhs.map(m => `
-//       <ul>
-//         <li>${m.nama}</li>
-//         <li>${m.email}</li>
-//       </ul>
-//     `).join('')}
-//   </div>
-// `
-
-
-
-// 3. conditional
-// const song = {
-//   title  : 'enemy', 
-//   singer : 'imagine dragon',
-//   feat   : 'jid'
-// }
-// const el = `
-//   <div class="song">
-//     <ul>
-//       <li>${song.title}</li>
-//       <li>${song.singer} ${song.feat ? `x ${song.feat}` : ''}</li>
-//     </ul>
-//   </div>
-// `
-
-
-
-// 4. nested
-// HTML Fragments Bersarang
-const mhs = {
-  nama       : 'Sandhika Galih' ,
-  semester   : 5,
-  mataKuliah : [
-    'Rekayasa Web',
-    'Analisis dan Perancangan Sistem Informasi',
-    'Pemrograman Sistem Interaktif',
-    'Perancangan Sistem Berorientasi Object'
-  ]
+  // menampilkan string yang persis sama 
+  // let result = ''
+  // strings.forEach((str, i) => {
+  //   result += `${str}${values[i] || ''}`
+  // });
+  // return result
+  return strings.reduce((result,str,i) => `${result} ${str}${values[i] || ''}`, '')
 }
 
-// function cetakMataKuliah(mataKuliah) {
-//   return `
-//     <ol>
-//       ${mataKuliah.map(mk => `<li>${mk}</li>`).join('')}
-//     </ol>
-//   `
-// }
-
-// const el = `
-//   <div class="mhs">
-//     <h2>${mhs.nama}</h2>
-//     <span class="semester">Semester : ${mhs.semester}</span>
-//     <h4>Mata Kuliah</h4>
-//     ${cetakMataKuliah(mhs.mataKuliah)}
-//   </div>
-// `
-
-const el = `
-  <div class="mhs">
-    <h2>${mhs.nama}</h2>
-    <span class="semester">Semester : ${mhs.semester}</span>
-    <h4>Mata Kuliah</h4>
-    <ol>
-      ${mhs.mataKuliah.map(mk => `<li>${mk}</li>`).join('')}
-    </ol>
-  </div>
-`
+const name = 'Erwin Smith';
+const age  = 33
+const str  = coba `Hi, i'm ${age} and my name ${name}`
+console.log(str)
 
 
 
-document.body.innerHTML = el
+// Contoh 2 : 
+// Highlight
+
+function highlight(strings, ...values) {
+  return strings.reduce((result,str,i) => `${result}${str}<span class="hl">${values[i] || ''}</span>`, '')
+}
+
+const name2 = 'Levi Ackerman'
+const age2  = 28
+const squad = 'Scouting Legion'
+const str2  = highlight `Hi, i'm ${age2} and my name ${name2} i'm from ${squad}`
+console.log(str2)
+
+document.body.innerHTML = str2
+
+
+
+/**
+ * 
+ * Penggunaan lain Tagged Template
+ *    > Escaping HTML Tags 
+ *      (Sanitasi HTML Tag) menghindari script/karakter yang tidak diinginkan pada halaman web
+ *    > Translation & Internationalization
+ *      alih bahasa dari halaman web
+ *    > Styled Components
+ *      front-end framework (vue, react)
+ * 
+ */
