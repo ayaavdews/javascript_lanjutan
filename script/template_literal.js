@@ -1,5 +1,5 @@
 // Javascript Lanjutan (Advanced Javascript)
-// Template Literal / Template String
+// Template Literal / Template String (Latihan)
 
 /**
  * 
@@ -38,3 +38,111 @@
  *    diakhir tambahkan "emmet.includeLanguages": {"javascript": "html"} -> save & close.
  * 
  */
+
+// HTML Fragments
+
+// 1. Bentuk Umum : 
+// const mhs = {
+//   nama : 'Sandhika Galih',
+//   umur : 33,
+//   nrp  : '043040023',
+//   email: 'sandhikagalih@unpas.ac.id'
+// }
+
+// const el = `<div class="mhs">
+//   <h2>${mhs.nama}</h2>
+//   <span class="nrp">${mhs.nrp}</span>
+// </div>`
+
+
+
+// 2. Looping
+// const mhs = [
+//   {
+//     nama : 'oogway',
+//     email: 'oogway@gmail.com'
+//   },
+//   {
+//     nama : 'shifuu',
+//     email: 'shifuu@gmail.com'
+//   },
+//   {
+//     nama : 'tailung',
+//     email: 'tailung@gmail.com'
+//   }
+// ]
+
+// const el = `
+//   <div class="mhs">
+//     ${mhs.map(m => `
+//       <ul>
+//         <li>${m.nama}</li>
+//         <li>${m.email}</li>
+//       </ul>
+//     `).join('')}
+//   </div>
+// `
+
+
+
+// 3. conditional
+// const song = {
+//   title  : 'enemy', 
+//   singer : 'imagine dragon',
+//   feat   : 'jid'
+// }
+// const el = `
+//   <div class="song">
+//     <ul>
+//       <li>${song.title}</li>
+//       <li>${song.singer} ${song.feat ? `x ${song.feat}` : ''}</li>
+//     </ul>
+//   </div>
+// `
+
+
+
+// 4. nested
+// HTML Fragments Bersarang
+const mhs = {
+  nama       : 'Sandhika Galih' ,
+  semester   : 5,
+  mataKuliah : [
+    'Rekayasa Web',
+    'Analisis dan Perancangan Sistem Informasi',
+    'Pemrograman Sistem Interaktif',
+    'Perancangan Sistem Berorientasi Object'
+  ]
+}
+
+// function cetakMataKuliah(mataKuliah) {
+//   return `
+//     <ol>
+//       ${mataKuliah.map(mk => `<li>${mk}</li>`).join('')}
+//     </ol>
+//   `
+// }
+
+// const el = `
+//   <div class="mhs">
+//     <h2>${mhs.nama}</h2>
+//     <span class="semester">Semester : ${mhs.semester}</span>
+//     <h4>Mata Kuliah</h4>
+//     ${cetakMataKuliah(mhs.mataKuliah)}
+//   </div>
+// `
+
+const el = `
+  <div class="mhs">
+    <h2>${mhs.nama}</h2>
+    <span class="semester">Semester : ${mhs.semester}</span>
+    <h4>Mata Kuliah</h4>
+    <ol>
+      ${mhs.mataKuliah.map(mk => `<li>${mk}</li>`).join('')}
+    </ol>
+  </div>
+`
+
+
+
+document.body.innerHTML = el
