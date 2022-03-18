@@ -5,13 +5,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Javascript Lanjutan</title>
+
+  <style>
+    h1 {
+      display: flex;
+      justify-content: center;
+      margin-left: 16px;
+    }
+
+    .title {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 50px;
+      color: darkturquoise;
+    }
+
+    .title span {
+      transition: .3s;
+      cursor: pointer;
+    }
+
+    .title span:hover {
+      transform: scale(1.2);
+    }
+  </style>
 </head>
 <body>
+  <h1 class="title">Spread Operator</h1>
+
   <ul>
-    <li class="crew">King</li>
-    <li class="crew">Queen</li>
-    <li class="crew">Jack</li>
+    <li>Gyoumei</li>
+    <li>Sanemi</li>
+    <li>Giyuu</li>
   </ul>
-  <script src="script/forOf_forIn.js"></script>
+
+  <script src="script/spread_operator.js"></script>
 </body>
 </html>
