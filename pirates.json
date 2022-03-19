@@ -1,0 +1,44 @@
+[
+  {
+    "name"         : "Charlotte Katakuri", 
+    "affiliations" : "Big Mom Pirates",
+    "devil fruit"  : "Mochi Mochi no Mi",
+    "bounty"       : 1057000000
+  },
+  {
+    "name"         : "Marco",
+    "affiliations" : "Whitebeard Pirates",
+    "devil fruit"  : "Tori Tori no Mi, Model: Phoenix",
+    "bounty"       : 1374000000
+  },
+  {
+    "name"         : "Donquixote Doflamingo",
+    "affiliations" : "Donquixote Pirates",
+    "devil fruit"  : "Ito Ito no Mi",
+    "bounty"       : 340000000
+  },
+  {
+    "name"         : "Buggy",
+    "affiliations" : "Buggy's Delivery",
+    "devil fruit"  : "Bara Bara no Mi",
+    "bounty"       : 15000000
+  },
+  {
+    "name"         : "Boa Hancock",
+    "affiliations" : "Kuja Pirates",
+    "devil fruit"  : "Mero Mero no Mi",
+    "bounty"       : 80000000
+  },
+  {
+    "name"         : "Scratchmen Apoo",
+    "affiliations" : "On Air Pirates",
+    "devil fruit"  : "Oto Oto no Mi",
+    "bounty"       : 350000000
+  },
+  {
+    "name"         : "X Drake",
+    "affiliations" : "Drake Pirates",
+    "devil fruit"  : "Ryu Ryu no Mi, Model: Allosaurus",
+    "bounty"       : 222000000
+  }
+]
