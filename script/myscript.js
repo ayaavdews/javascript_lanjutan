@@ -1,33 +1,24 @@
-$('.search-button').click(function() {
-  $.ajax({
-    url: 'http://www.omdbapi.com/?apikey=e41f0c9b&s=' + $('.input-keyword').val(),
-    success: results => {
-      const movies = results.Search
-      let cards = '';
-      movies.forEach(m => {
-        cards += showCards(m)
-      })
-      $('.movie-container').html(cards)
-  
-      // jangan gunakan arrow function, kita memerlukan scope this.
-      $('.modal-detail-button').click(function() {
-        $.ajax({
-          url: 'http://www.omdbapi.com/?apikey=e41f0c9b&i=' + $(this).data('imdbid'),
-          success: m => {
-            const movieDetail = showMovieDetail(m)
-              $('.modal-body').html(movieDetail)
-          },
-          error: e => {
-            console.log(e.responseText)
-          }
+// Fetch
+const searchButton = document.querySelector('.search-button')
+searchButton.addEventListener('click', function() {
+  const inputKeyword = document.querySelector('.input-keyword')
+  fetch(`http://www.omdbapi.com/?apikey=e41f0c9b&s=${inputKeyword.value}`)
+    .then(response => response.json())
+    .then(response => {
+      const movies = response.Search
+      let cards    = ''
+      movies.forEach(m => cards += showCards(m))
+      document.querySelector('.movie-container').innerHTML = cards
+      
+      const modalDetailButton = document.querySelectorAll('.modal-detail-button')
+      modalDetailButton.forEach(btn => {
+        btn.addEventListener('click', function() {
+          fetch(`http://www.omdbapi.com/?apikey=e41f0c9b&i=${this.dataset.imdbid}`)
+            .then(response => response.json())
+            .then(m => document.querySelector('.modal-body').innerHTML = showMovieDetail(m))
         })
       })
-  
-    },
-    error: e => {
-      console.log(e.responseText)
-    }
-  })
+    })
 })
 
 function showCards(m) {
@@ -63,15 +54,3 @@ function showMovieDetail(m) {
     </div>
   </div>`
 }
-
-/**
- * 
- * terlalu banyak menggunakan callback -> callback hell.
- * baris program akan terus menjorok kedalam seiring bertambahnya fungsi yang dibuat.
- * untuk menghindari callback hell kita bisa menggunakan promise.
- * 
- * terdapat cara yang lebih efektif, dengan menggantikan fungsi jquery menggunakan fungsi bawaan
- * javascript yaitu fetch. ketika menggunakan jquery berarti kita memanggil library eksternal, sehingga
- * terdapat resource yang digunakan yang mempengaruhi performance.
- * 
- */
