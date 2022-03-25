@@ -1,25 +1,40 @@
-// Fetch
-const searchButton = document.querySelector('.search-button')
-searchButton.addEventListener('click', function() {
-  const inputKeyword = document.querySelector('.input-keyword')
-  fetch(`http://www.omdbapi.com/?apikey=e41f0c9b&s=${inputKeyword.value}`)
-    .then(response => response.json())
-    .then(response => {
-      const movies = response.Search
-      let cards    = ''
-      movies.forEach(m => cards += showCards(m))
-      document.querySelector('.movie-container').innerHTML = cards
-      
-      const modalDetailButton = document.querySelectorAll('.modal-detail-button')
-      modalDetailButton.forEach(btn => {
-        btn.addEventListener('click', function() {
-          fetch(`http://www.omdbapi.com/?apikey=e41f0c9b&i=${this.dataset.imdbid}`)
-            .then(response => response.json())
-            .then(m => document.querySelector('.modal-body').innerHTML = showMovieDetail(m))
-        })
-      })
-    })
+const btnSearch = document.querySelector('.search-button')
+btnSearch.addEventListener('click', async function() {
+  const keyword = document.querySelector('.input-keyword')
+  const movies  = await getMovies(keyword.value)
+  updateUI(movies)
 })
+
+function getMovies(keyword)  {
+  return fetch(`http://www.omdbapi.com/?apikey=e41f0c9b&s=${keyword}`)
+            .then(response => response.json())
+            .then(response => response.Search)
+}
+
+function updateUI(movies) {
+  let cards    = ''
+  movies.forEach(m => cards += showCards(m))
+  document.querySelector('.movie-container').innerHTML = cards
+}
+
+// event binding
+document.addEventListener('click', async function(e) {
+  if(e.target.classList.contains('modal-detail-button')) {
+    const movieDetail = await getMovieDetail(e.target.dataset.imdbid)
+    updateUIDetail(movieDetail)
+  }
+})
+
+
+function getMovieDetail(imdbid) {
+  return fetch(`http://www.omdbapi.com/?apikey=e41f0c9b&i=${imdbid}`)
+            .then(response => response.json())
+            .then(m => m)
+}
+
+function updateUIDetail(m) {
+  document.querySelector('.modal-body').innerHTML = showMovieDetail(m)
+}
 
 function showCards(m) {
   return `
